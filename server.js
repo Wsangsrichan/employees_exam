@@ -41,12 +41,14 @@ app.get('/employees', async (req, res) => {
    res.json(employees)
 })
 
-app.get('/employees/:id', (req, res) => {
-    res.json({ message: 'test employees/:id'})
+app.get('/employees/:id', async (req, res) => {
+    const { id } = req.params
+    const employees = await Employees.findById(id)
+    res.json(employees)
+
  })
 
  app.post('/employees', async (req, res) => {
-    //res.json({ message: 'post employees'})
     const payload = req.body
     const employees = new Employees(payload)
     await employees.save()
