@@ -57,7 +57,10 @@ app.get('/employees/:id', async (req, res) => {
 
 
  app.put('/employees/:id', (req, res) => {
-    res.json({ message: 'put employees'})
+    const payload = req.body
+    const { id } = req.params
+    const employees = await Employees.findByIdAndUpdate (id, {$set: payload})
+    res.json(employees)
  })
 
  app.delete('/employees/:id', (req, res) => {
