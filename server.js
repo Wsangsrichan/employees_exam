@@ -1,35 +1,24 @@
+const { Router } = require('express')
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 const Employees = require('./models/employees')
 
-//const basicAuth = require('.htaccess')
-//const bodyParser = require('body-parser')
+// basic authen
+var http = require('http')
+var auth = require('http-auth')
+const { Http2ServerRequest } = require('http2')
+var basic = auth.basic({
+    realm: "employees",
+    file: __dirname + "/user.htpasswd"
+})
 
-//app.use(bodyParser.urlencoded({ extended: false}))
-//app.use(bodyParser.json())
-
-
-//app.use(basicAuth)
-
-// test data
-/*const employees = [
-    {
-        "_id": "5e2e9dd0880bdf2d751b51c8",
-        "firstname": "Hattie",
-        "lastname": "Schamberger",
-        "birthday": "1987-11-22",
-        "email": "Carol41@yahoo.com"
-    }
-] 
-*/
 
 
 // connect mongodb
 mongoose.connect('mongodb://localhost:27017/employees_exam', {
      useNewUrlParser: true
 })
-
 
 
 app.use(express.json())
@@ -71,7 +60,18 @@ app.get('/employees/:id', async (req, res) => {
  })
  
 
-app.listen(9000, () => {
+app.listen(9000, basic ,() => {
     console.log('Application is running on port 9000')
 })
 
+/*
+http.createServer( 
+    basic.check((req, res) => {
+        res.end('welcome')
+    })
+    )
+    
+    .listen(9000,() => {
+        console.log("server running at http://127.0.0.1:9000")
+    })   
+*/
