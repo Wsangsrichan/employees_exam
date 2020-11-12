@@ -56,10 +56,10 @@ app.get('/employees/:id', async (req, res) => {
  })
 
 
- app.put('/employees/:id', (req, res) => {
+ app.put('/employees/:id', async (req, res) => {
     const payload = req.body
     const { id } = req.params
-    const employees = await Employees.findByIdAndUpdate (id, {$set: payload})
+    const employees = await Employees.findByIdAndUpdate(id, { $set: payload })
     res.json(employees)
  })
 
