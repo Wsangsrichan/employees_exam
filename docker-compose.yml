@@ -1,0 +1,16 @@
+version: '3.4'
+services:
+   nodejs:
+     build: .
+     image: nodejs:dev
+     container_name: nodejs
+     command: npm start
+     ports:
+        - 9000:9000
+     volumes:
+        - /src:/app/src
+        
+   mongodb:
+     image: mongo:3.2.7
+     volumes:
+        - /mongodata:/data/db:rw
