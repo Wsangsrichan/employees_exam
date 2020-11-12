@@ -1,9 +1,7 @@
 FROM node:8.4.0-alpine
 
-WORK /app
+WORKDIR /app
 COPY . /app
 RUN npm install
 
-CMD ["npm","start"]
-
-EXPOSE 9000
+EXPOSE 9000                                                            
