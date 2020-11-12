@@ -63,8 +63,11 @@ app.get('/employees/:id', async (req, res) => {
     res.json(employees)
  })
 
- app.delete('/employees/:id', (req, res) => {
-    res.json({ message: 'delete employees'})
+ app.delete('/employees/:id', async (req, res) => {
+    const { id } = req.params
+
+    await Employees.findByIdAndDelete(id)
+    res.status(204).end()
  })
  
 
